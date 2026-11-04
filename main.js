@@ -315,6 +315,17 @@
     window.addEventListener('scroll',upd,{passive:true});upd();
   }
 
+  /* ---------- kennisbank: zoeken + categorie ---------- */
+  var kb=$('[data-kb]');
+  if(kb){
+    var ks=$('#kbSearch',kb),cat='all';
+    var runKb=function(){var q=(ks.value||'').trim().toLowerCase(),n=0;
+      $$('.kbcard',kb).forEach(function(c){var hit=(cat==='all'||c.getAttribute('data-cat')===cat)&&(!q||c.textContent.toLowerCase().indexOf(q)>-1);c.hidden=!hit;if(hit)n++});
+      $('[data-kbempty]',kb).hidden=n>0};
+    ks.addEventListener('input',runKb);
+    $$('[data-kbcat]',kb).forEach(function(b){b.addEventListener('click',function(){cat=b.getAttribute('data-kbcat');$$('[data-kbcat]',kb).forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});runKb()})});
+  }
+
   /* ---------- FAQ zoeken ---------- */
   var fs=$('#faqSearch');
   if(fs){
