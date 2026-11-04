@@ -1,6 +1,7 @@
 /* KIJK62 — huisstijl
    Lay-out: het logo-oog als terugkerend merkteken (kijkt mee), zoekerhoeken als detail, ritme van lichte en donkerbruine banden.
    Kleur: papier, inkt, brons, goud (zelfde palet als Photostudio62).
+   Alleen licht: geen donkere modus.
    Type: Bricolage Grotesque (koppen), Instrument Sans (tekst), JetBrains Mono (formaten, specs, cijfers). */
 :root{
   --bg:#FDFCFA;
@@ -33,32 +34,10 @@
   --ff-text:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --ff-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   --wrap:1200px;
+  color-scheme:light;
   --gut:max(16px, env(safe-area-inset-left, 0px));
   --gut-r:max(16px, env(safe-area-inset-right, 0px));
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15120E;--surface:#1F1B16;--surface-2:#29241D;--ink:#F3EEE6;--ink-2:#B3A895;--line:#3A332A;
-    --accent:#C9AE7C;--accent-hover:#D9C193;--accent-soft:#352C1E;--on-accent:#15120E;
-    --flash:#E0A93A;--flash-hover:#EBBC5C;--on-flash:#1E1B18;
-    --deep:#0E0C09;--on-deep:#F3EEE6;--on-deep-2:#C9BCA6;--deep-line:#3A332A;--deep-2:#1A1611;
-    --ok:#8CC79A;--ok-soft:#1E2A1F;--wait:#E9B95C;--wait-soft:#3A2C12;--bad:#E07A7A;
-    --sand:#3A3125;--sand-2:#5A4C38;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -22px rgba(0,0,0,.8);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#15120E;--surface:#1F1B16;--surface-2:#29241D;--ink:#F3EEE6;--ink-2:#B3A895;--line:#3A332A;
-  --accent:#C9AE7C;--accent-hover:#D9C193;--accent-soft:#352C1E;--on-accent:#15120E;
-  --flash:#E0A93A;--flash-hover:#EBBC5C;--on-flash:#1E1B18;
-  --deep:#0E0C09;--on-deep:#F3EEE6;--on-deep-2:#C9BCA6;--deep-line:#3A332A;--deep-2:#1A1611;
-  --ok:#8CC79A;--ok-soft:#1E2A1F;--wait:#E9B95C;--wait-soft:#3A2C12;--bad:#E07A7A;
-  --sand:#3A3125;--sand-2:#5A4C38;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -22px rgba(0,0,0,.8);
-  color-scheme:dark;
-}
-
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
