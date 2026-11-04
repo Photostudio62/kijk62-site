@@ -242,6 +242,16 @@
     })});
   }
 
+  /* ---------- voor/na per kanaal ---------- */
+  $$('[data-ba]').forEach(function(box){
+    var btns=$$('[data-ba-state]',box),touched=false;
+    var set=function(s){box.setAttribute('data-state',s);btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-ba-state')===s))});
+      $('.ba-voor',box).setAttribute('aria-hidden',String(s!=='voor'));$('.ba-na',box).setAttribute('aria-hidden',String(s!=='na'))};
+    btns.forEach(function(b){b.addEventListener('click',function(){touched=true;set(b.getAttribute('data-ba-state'))})});
+    // eenmalig vanzelf omschakelen zodra het in beeld komt
+    if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){io.disconnect();setTimeout(function(){if(!touched)set('na')},2200)}},{threshold:.5});io.observe(box)}
+  });
+
   /* ---------- toon-typer (copywriting) ---------- */
   var tone=$('[data-tone]');
   if(tone){
