@@ -242,15 +242,20 @@
     })});
   }
 
-  /* ---------- schuifvergelijking ---------- */
+  /* ---------- schuifvergelijking: slepen met vinger of muis, pijltjestoetsen ---------- */
   $$('[data-cmp]').forEach(function(box){
-    var r=$('.cmp-range',box),touched=false;
-    var set=function(v){box.style.setProperty('--pos',v+'%')};
-    r.addEventListener('input',function(){touched=true;set(r.value)});
+    var r=$('.cmp-range',box),touched=false,drag=false,pos=50;
+    var set=function(v){pos=Math.max(0,Math.min(100,v));box.style.setProperty('--pos',pos.toFixed(1)+'%');r.value=Math.round(pos)};
+    var fromX=function(x){var b=box.getBoundingClientRect();return (x-b.left)/b.width*100};
+    box.addEventListener('pointerdown',function(ev){if(ev.button>0)return;touched=true;drag=true;box.classList.add('dragging');try{box.setPointerCapture(ev.pointerId)}catch(err){}set(fromX(ev.clientX))});
+    box.addEventListener('pointermove',function(ev){if(drag){set(fromX(ev.clientX));ev.preventDefault()}});
+    var end=function(){drag=false;box.classList.remove('dragging')};
+    box.addEventListener('pointerup',end);box.addEventListener('pointercancel',end);box.addEventListener('lostpointercapture',end);
+    r.addEventListener('input',function(){touched=true;set(+r.value)});
     if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(en){if(!en[0].isIntersecting)return;io.disconnect();
       var keys=[[0,50],[900,18],[1900,82],[2900,50]],t0=performance.now();
-      (function f(now){if(touched)return;var t=now-t0,i=0;while(i<keys.length-1&&t>keys[i+1][0])i++;if(i>=keys.length-1){set(50);r.value=50;return}
-        var a=keys[i],b=keys[i+1],p=(t-a[0])/(b[0]-a[0]),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2,v=a[1]+(b[1]-a[1])*e;set(v.toFixed(1));r.value=Math.round(v);requestAnimationFrame(f)})(t0);
+      (function f(now){if(touched)return;var t=now-t0,i=0;while(i<keys.length-1&&t>keys[i+1][0])i++;if(i>=keys.length-1){set(50);return}
+        var a=keys[i],b=keys[i+1],p=(t-a[0])/(b[0]-a[0]),q=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;set(a[1]+(b[1]-a[1])*q);requestAnimationFrame(f)})(t0);
     },{threshold:.45});io.observe(box)}
   });
 

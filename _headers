@@ -8,7 +8,7 @@
   Cache-Control: public, max-age=2592000
 
 /style.css
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /main.js
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=31536000, immutable
