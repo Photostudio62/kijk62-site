@@ -1,0 +1,20 @@
+KIJK62 - losse pagina's (statische website)
+
+Inhoud: 29 pagina's in het Nederlands + 29 in het Engels (/en/), plus 404, elk met eigen URL, titel, beschrijving, canonical, hreflang en structured data.
+Extra: sitemap.xml, robots.txt, llms.txt (overzicht voor AI-assistenten), _headers en functions/api/form.js (contactformulier).
+
+Zo zet je het online
+1. De inhoud van deze map staat in de root van de repository (index.html direct in de root).
+2. Cloudflare Pages: framework preset None, build command leeg, output directory /.
+3. Contactformulier: zet in Cloudflare Pages > Settings > Variables and Secrets:
+   - RESEND_API_KEY (secret)
+   - FORM_TO   bijv. info@kijk62.nl
+   - FORM_FROM bijv. KIJK62 <formulier@kijk62.nl>  (domein moet in Resend geverifieerd zijn)
+4. Koppel het domein kijk62.nl (en www.kijk62.nl) onder Custom domains.
+5. Dien https://kijk62.nl/sitemap.xml in bij Google Search Console en Bing Webmaster Tools.
+
+Let op
+- Alle URL's gaan uit van het domein https://kijk62.nl.
+- De portfoliocases zijn VOORBEELDEN (noindex). Vervang ze door echte klanten.
+- Werkt het formulier niet (nog geen RESEND_API_KEY), dan krijgt de bezoeker het bericht om te kopiëren en te mailen.
+- Test na livegang: formulier, taalknop, ROI-calculator, website-bouwer en een paar casepagina's.
