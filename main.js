@@ -23,7 +23,7 @@
     growWhy:function(n,v){return 'A steady rhythm on '+n+' channels'+(v?', with video':'')+'. We plan, post and reply.'},
     fullProf:"Including your own LinkedIn profile as the owner. You never have to think about it again.",fullMany:'Lots of channels and a high rhythm. We take over everything, with a regular studio day.',
     none:'none',planTxt:function(p,ch,f,m){return 'My content plan: '+p+' ('+ch+', '+f+'x a week, ± '+m+' posts per month)'},
-    copied:'Copied',sending:'Sending…',sentH:'Thank you, your request has been sent.',sentP:'We will get back to you within one working day. You will also receive a confirmation by email.',subj:'Subject: Intro call KIJK62',name:'Name',company:'Company',email:'Email',phone:'Phone',interest:'Interested in',pref:'Preference',noPref:'no preference'
+    copied:'Copied',peekCase:'View case',sending:'Sending…',sentH:'Thank you, your request has been sent.',sentP:'We will get back to you within one working day. You will also receive a confirmation by email.',subj:'Subject: Intro call KIJK62',name:'Name',company:'Company',email:'Email',phone:'Phone',interest:'Interested in',pref:'Preference',noPref:'no preference'
   }:{
     open:'Menu openen',close:'Menu sluiten',done:'Klaar. <b>Wij doen de rest.</b>',pm:' p/m',ph:' p/u',perMonth:' per maand',hpw:' uur p/w',
     y1:'rendement in jaar 1',month:'maand ',after12:'na maand 12',hours:' uur',
@@ -37,7 +37,7 @@
     growWhy:function(n,v){return 'Vast ritme op '+n+' kanalen'+(v?', met video erbij':'')+'. Wij plannen, posten en reageren.'},
     fullProf:'Inclusief je eigen LinkedIn-profiel als ondernemer. Je hebt er geen omkijken meer naar.',fullMany:'Veel kanalen en een hoog ritme. Wij nemen alles over, met een vaste studiodag.',
     none:'geen',planTxt:function(p,ch,f,m){return 'Mijn contentplan: '+p+' ('+ch+', '+f+'x per week, ± '+m+' posts per maand)'},
-    copied:'Gekopieerd',sending:'Versturen…',sentH:'Bedankt, je aanvraag is verstuurd.',sentP:'We nemen binnen één werkdag contact met je op. Je krijgt ook een bevestiging per e-mail.',subj:'Onderwerp: Kennismaking KIJK62',name:'Naam',company:'Bedrijf',email:'E-mail',phone:'Telefoon',interest:'Interesse',pref:'Voorkeur',noPref:'geen voorkeur'
+    copied:'Gekopieerd',peekCase:'Bekijk de case',sending:'Versturen…',sentH:'Bedankt, je aanvraag is verstuurd.',sentP:'We nemen binnen één werkdag contact met je op. Je krijgt ook een bevestiging per e-mail.',subj:'Onderwerp: Kennismaking KIJK62',name:'Naam',company:'Bedrijf',email:'E-mail',phone:'Telefoon',interest:'Interesse',pref:'Voorkeur',noPref:'geen voorkeur'
   };
 
   /* ---------- header, menu, mobiele balk ---------- */
@@ -316,6 +316,55 @@
       $('#wbCta').setAttribute('data-plan',WL.plan+(lab?lab.textContent:'')+' ('+WL.pages[ty.value]+')'+(fs.length?', '+fs.map(function(i){return i.value}).join(', '):''));
     };
     wb.addEventListener('change',calcW);calcW();
+  }
+
+
+  /* ---------- glurend oog: max 3x per bezoeker, op 3 verschillende pagina's, na 4–12 s ---------- */
+  var pk=$('#peek'),pp=$('#peekPanel');
+  if(pk&&pp){
+    var KEY='kijk62-peek',st={n:0,pages:[]};
+    try{var raw=localStorage.getItem(KEY);if(raw)st=JSON.parse(raw)||st}catch(e){}
+    var here=location.pathname.replace(/(index)?\.html$/,'').replace(/\/+$/,'')||'/';
+    var save=function(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+    var cases=[];try{cases=JSON.parse($('#peekData').textContent)}catch(e){}
+    var allowed=cases.length&&st.n<3&&st.pages.indexOf(here)<0&&!/\/404$/.test(here);
+    if(allowed){
+      var delay=4000+Math.random()*8000;
+      setTimeout(function(){
+        if(document.hidden){return}
+        st.n++;st.pages.push(here);save();
+        pk.hidden=false;void pk.offsetWidth;pk.classList.add('in');
+        setInterval(function(){if(!pp.hidden)return;pk.classList.remove('wiggle');void pk.offsetWidth;pk.classList.add('wiggle')},5200);
+      },delay);
+    }
+    var idx=0,auto=null,stage=$('.pp-stage',pp),dots=$('.pp-dots',pp);
+    dots.innerHTML=cases.map(function(c,i){return '<button type="button" role="tab" aria-label="'+c.n+'" data-i="'+i+'"></button>'}).join('');
+    var countUp=function(el){
+      var full=el.getAttribute('data-v'),m=full.match(/^([^\d]*)(\d+(?:[.,]\d+)?)(.*)$/);
+      if(!m||reduce){el.textContent=full;return}
+      var pre=m[1],numS=m[2],post=m[3],dec=(numS.split(/[.,]/)[1]||'').length,sep=numS.indexOf(',')>-1?',':'.',target=parseFloat(numS.replace(',','.')),t0=performance.now();
+      (function f(now){var p=Math.min(1,(now-t0)/900),e=1-Math.pow(1-p,3),v=(target*e).toFixed(dec);el.textContent=pre+(sep===','?v.replace('.',','):v)+post;if(p<1)requestAnimationFrame(f)})(t0);
+    };
+    var show=function(i){
+      idx=(i+cases.length)%cases.length;var c=cases[idx];
+      stage.innerHTML='<article class="pp-case"><div class="pp-logo">'+c.logo+'</div><span class="pp-meta">'+c.s+' · '+c.p+'</span><div class="pp-kpis">'+c.r.map(function(r){return '<div><b data-v="'+r[0].replace(/"/g,'&quot;')+'">'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('')+'</div><p class="pp-q">“'+c.q+'”</p><a class="pp-link" href="'+c.u+'">'+S.peekCase+' →</a></article>';
+      $$('.pp-kpis b',stage).forEach(countUp);
+      $$('button',dots).forEach(function(d,k){d.setAttribute('aria-selected',String(k===idx))});
+    };
+    var stopAuto=function(){if(auto){clearInterval(auto);auto=null}};
+    var open=function(){
+      pp.hidden=false;void pp.offsetWidth;pp.classList.add('open');pk.classList.remove('in');
+      setTimeout(function(){pk.hidden=true},400);
+      show(Math.floor(Math.random()*cases.length));$('.pp-x',pp).focus();
+      if(!reduce)auto=setInterval(function(){show(idx+1)},6000);
+    };
+    var close=function(){pp.classList.remove('open');stopAuto();setTimeout(function(){pp.hidden=true},300)};
+    pk.addEventListener('click',open);
+    $$('[data-peek-close]',pp).forEach(function(b){b.addEventListener('click',close)});
+    $$('[data-peek-step]',pp).forEach(function(b){b.addEventListener('click',function(){stopAuto();show(idx+(+b.getAttribute('data-peek-step')))})});
+    dots.addEventListener('click',function(e){var b=e.target.closest('button');if(b){stopAuto();show(+b.getAttribute('data-i'))}});
+    pp.addEventListener('pointerenter',stopAuto);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pp.hidden)close()});
   }
 
   /* ---------- portfolio-filter ---------- */
