@@ -774,6 +774,9 @@ main [style*="sticky"],main .stack,main .stack-lg{position:static}
 .ad-badge{display:inline-block;font:600 .7rem/1 var(--ff-mono);text-transform:uppercase;letter-spacing:.06em;background:var(--wait-soft);color:var(--wait);padding:.35rem .55rem;border-radius:6px}
 .kbcard .ad-badge{position:absolute;top:12px;right:12px}
 .kb-narrow{max-width:820px}
+.kb-fig{margin:1.6rem 0 0;display:grid;gap:.6rem}
+.kb-fig img{width:100%;max-width:520px;height:auto;border-radius:18px;box-shadow:var(--shadow)}
+.kb-fig figcaption{font-size:.88rem;color:var(--ink-2);max-width:60ch}
 .kb-hero h1{font-size:clamp(2rem,4.4vw,3.2rem);margin:.8rem 0 1rem}
 .ad-bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;border:1px dashed var(--wait);background:var(--wait-soft);border-radius:12px;padding:.7rem .9rem;font-size:.92rem;margin-bottom:1.2rem}
 .ad-bar a{font-weight:600}
