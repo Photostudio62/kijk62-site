@@ -556,6 +556,9 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .foot a{text-decoration:none;display:inline-flex;min-height:38px;align-items:center}
 .foot a:hover{text-decoration:underline;color:var(--flash)}
 .foot p{color:var(--on-deep-2);margin-top:1rem;max-width:34ch}
+.foot-socials{display:flex;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap}
+.foot-socials a{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:0 .9rem;border:1px solid var(--deep-line);border-radius:999px;text-decoration:none;font-weight:600}
+.foot-socials a:hover{border-color:var(--flash);color:var(--flash);text-decoration:none}
 .foot address{font-style:normal;color:var(--on-deep-2);line-height:1.8}
 .foot-eye{margin:3rem auto 0;width:min(100%,640px);opacity:.5}
 .foot-eye .eye-ring,.foot-eye .eye-pupil{background:var(--deep-line)}
