@@ -324,7 +324,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 
 /* LinkedIn voor/na */
 .li-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-.li-banner{height:96px;background:var(--surface-2);position:relative;transition:background .5s}
+.li-banner{aspect-ratio:2/1;background:var(--surface-2) center/cover no-repeat;position:relative;transition:background .5s}
 .li-av{position:absolute;left:20px;bottom:-38px;width:84px;height:84px;border-radius:50%;border:4px solid var(--surface);background:var(--line);display:grid;place-items:center;font:800 1.5rem var(--ff-display);color:var(--ink-2);transition:all .5s;overflow:hidden}
 .li-av img{width:100%;height:100%;object-fit:cover}
 .li-main{padding:48px 20px 18px;display:grid;gap:.35rem}
@@ -335,7 +335,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .li-rows div:last-child{border-bottom:0}
 .li-rows span:first-child{color:var(--ink-2)}
 .li-rows span:last-child{text-align:right;font-weight:600}
-.li-card[data-state="na"] .li-banner{background:linear-gradient(120deg,#2B251E,#92794C 70%,#E0A93A)}
+.li-card[data-state="na"] .li-banner{background-image:url(img/de-vries-installatie-linkedin-banner.jpg)}
 .li-card[data-state="na"] .li-av{background:linear-gradient(150deg,#CEBEA0,#92794C);color:#fff}
 .flag-bad{color:var(--bad)!important}
 .flag-ok{color:var(--ok)!important}
@@ -370,7 +370,16 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .phone-bar i b{display:block;height:100%;width:0;background:#fff}
 .phone-time{position:absolute;right:14px;bottom:18px;font:600 .74rem/1 var(--ff-mono);color:#fff;background:rgba(0,0,0,.5);padding:.3rem .45rem;border-radius:5px;z-index:2}
 .board{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
-.board li{display:grid;grid-template-columns:1fr;gap:.3rem;padding:.9rem 1rem;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color .3s,background .3s}
+.board li{border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color .3s,background .3s}
+.board-btn{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr;gap:.3rem;width:100%;padding:.9rem 1rem;border-radius:14px;cursor:pointer;text-align:left}
+.board-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.board li:hover{border-color:var(--accent)}
+.phone-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#111;cursor:pointer}
+.phone-screen .scene{pointer-events:none;padding-bottom:16px}
+.phone-sound{position:absolute;right:12px;top:26px;z-index:3;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:1rem;display:grid;place-items:center;cursor:pointer}
+.phone-sound:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.phone-screen .phone-time{bottom:auto;top:30px;right:56px}
+.reel-credit{text-align:center;margin:.75rem 0 0;font-size:.72rem;color:var(--ink-2);letter-spacing:.04em}
 .board li.on{border-color:var(--accent);background:var(--accent-soft)}
 .board .mono{color:var(--accent);font-weight:600;padding-top:.15rem}
 .board strong{display:block}
