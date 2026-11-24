@@ -399,7 +399,7 @@
     };
     var show=function(i){
       idx=(i+cases.length)%cases.length;var c=cases[idx];
-      stage.innerHTML='<article class="pp-case"><div class="pp-logo">'+c.logo+'</div><span class="pp-meta">'+c.s+' · '+c.p+'</span><div class="pp-kpis">'+c.r.map(function(r){return '<div><b data-v="'+r[0].replace(/"/g,'&quot;')+'">'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('')+'</div><p class="pp-q">“'+c.q+'”</p><a class="pp-link" href="'+c.u+'">'+S.peekCase+' →</a></article>';
+      stage.innerHTML='<article class="pp-case"><div class="pp-logo">'+c.logo+'</div><span class="pp-meta">'+c.s+' · '+c.p+'</span><div class="pp-kpis">'+c.r.map(function(r){return '<div><b data-v="'+r[0].replace(/"/g,'&quot;')+'">'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('')+'</div>'+(c.q?'<p class="pp-q">“'+c.q+'”</p>':'<p class="pp-names">'+c.names+'</p>')+'<a class="pp-link" href="'+c.u+'">'+(c.lt||S.peekCase)+' →</a></article>';
       $$('.pp-kpis b',stage).forEach(countUp);
       $$('button',dots).forEach(function(d,k){d.setAttribute('aria-selected',String(k===idx))});
     };
