@@ -1037,3 +1037,7 @@ main [style*="sticky"],main .stack,main .stack-lg{position:static}
 .lw-more{display:grid;gap:.3rem;text-align:center;text-decoration:none;color:var(--accent)}
 .lw-more span{font:700 1.1rem/1.1 var(--ff-display);color:var(--ink)}
 .lw-more small{font:600 .75rem/1 var(--ff-mono);color:var(--accent)}
+/* portfolio: logowand als één bewegende rij naar rechts */
+.marquee--right .marquee-track{animation:marq 150s linear infinite reverse;gap:clamp(2rem,4vw,3.5rem)}
+.marquee--right .lw-item{width:200px}
+@media (max-width:640px){.marquee--right .lw-item{width:160px}}
